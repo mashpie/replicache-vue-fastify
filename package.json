@@ -6,10 +6,10 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "nx": "15.0.3",
-    "prettier": "^2.6.2"
+    "nx": "15.0.3"
   },
   "workspaces": [
+    "client/*",
     "packages/*"
   ]
 }
