@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon app/server.js",
     "build": "echo 'nobuild'",
-    "test": "c8 tap"
+    "test": "tap"
   },
   "dependencies": {
     "@rnvf/common-esm": "*",

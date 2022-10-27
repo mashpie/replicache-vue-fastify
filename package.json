@@ -2,15 +2,23 @@
   "name": "rnvf",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "test": "nx run-many --target=test",
+    "dev": "nx run-many --target=dev"
+  },
   "private": true,
   "dependencies": {},
   "devDependencies": {
+    "@uscreen.de/dev-service": "^0.11.19",
     "nx": "15.0.3"
   },
   "workspaces": [
     "client/*",
     "server/*",
     "packages/*"
+  ],
+  "services": [
+    "nginx",
+    "mongo"
   ]
 }
