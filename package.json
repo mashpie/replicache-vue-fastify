@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "mkcert": "cd services/nginx/ssl && mkcert -key-file key.pem -cert-file cert.pem localhost",
     "test": "nx run-many --target=test",
     "dev": "nx run-many --target=dev"
   },

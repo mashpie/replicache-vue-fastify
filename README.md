@@ -1,6 +1,13 @@
-# @rnvf dev repo
+# @rnvf monorepo
 
-> rnvf: replicache + nx + vue + fastify demo
+> "rnvf": replicache + nx + vue + fastify 
+
+Nginx is prepconfigured as proxy with SSL support on localhost.
+
+- https://localhost -> serves the frontend
+- https://localhost/api -> serves the backend
+
+> run: `yarn mkcert` to generate a self-signed certificate once before running the app.
 
 ## Directoy Layout
 
