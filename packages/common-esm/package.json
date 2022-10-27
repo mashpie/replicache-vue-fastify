@@ -1,0 +1,11 @@
+{
+  "name": "@rnvf/common-esm",
+  "version": "0.0.0",
+  "main": "index.js",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "desm": "^1.3.0"
+  }
+}
