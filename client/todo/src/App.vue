@@ -6,8 +6,8 @@
         <span class="block text-indigo-600">Yet another Demo ToDo App.</span>
       </h2>
       <AddTask />
-      <pre>{{ taskList }}</pre>
-      <ul class="border-t">
+
+      <ul v-auto-animate="{ duration: 200 }" class="border-t">
         <TaskItem
           v-for="task of taskList.values()"
           :key="task.id"
