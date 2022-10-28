@@ -8,7 +8,11 @@
       <AddTask />
       <pre>{{ taskList }}</pre>
       <ul class="border-t">
-        <TaskItem v-for="task of taskList" :key="task.id" :task="task" />
+        <TaskItem
+          v-for="task of taskList.values()"
+          :key="task.id"
+          :task="task"
+        />
       </ul>
     </div>
   </div>

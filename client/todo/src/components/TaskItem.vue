@@ -17,6 +17,7 @@
     <button
       type="button"
       class="rounded-md border border-transparent text-red-300 bg-white-600 px-2.5 py-1 text-base font-medium hover:text-white hover:bg-red-600 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-red-500 focus:text-red-600"
+      @click="removeTask(task)"
     >
       <span>Delete</span>
     </button>
@@ -24,7 +25,7 @@
 </template>
 
 <script setup>
-import { toggleTask } from '../states/tasks'
+import { toggleTask, removeTask } from '../states/tasks'
 defineProps({
   task: {
     type: Object,
