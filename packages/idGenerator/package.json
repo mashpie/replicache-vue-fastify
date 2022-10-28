@@ -1,0 +1,10 @@
+{
+  "name": "@rnvf/id-generator",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "ulid": "^2.3.0"
+  }
+}

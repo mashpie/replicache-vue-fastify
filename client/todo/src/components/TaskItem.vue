@@ -3,14 +3,13 @@
     <label class="select-none cursor-pointer">
       <div class="flex h-5 items-center">
         <input
-          id="candidates"
-          aria-describedby="candidates-description"
-          name="candidates"
+          :checked="task.done"
           type="checkbox"
           class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          @change="toggleTask(task)"
         />
         <div class="ml-3 text-md font-medium text-gray-700">
-          Something that really should be done
+          {{ task.title }} ({{ task.done }})
         </div>
       </div>
     </label>
@@ -23,3 +22,13 @@
     </button>
   </li>
 </template>
+
+<script setup>
+import { toggleTask } from '../states/tasks'
+defineProps({
+  task: {
+    type: Object,
+    required: true
+  }
+})
+</script>

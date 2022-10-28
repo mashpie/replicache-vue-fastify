@@ -6,8 +6,9 @@
         <span class="block text-indigo-600">Yet another Demo ToDo App.</span>
       </h2>
       <AddTask />
+      <pre>{{ taskList }}</pre>
       <ul class="border-t">
-        <TaskItem v-for="index in 3" :key="index" />
+        <TaskItem v-for="task of taskList" :key="task.id" :task="task" />
       </ul>
     </div>
   </div>
@@ -16,4 +17,6 @@
 <script setup>
 import AddTask from './components/AddTask.vue'
 import TaskItem from './components/TaskItem.vue'
+
+import { taskList } from './states/tasks'
 </script>
