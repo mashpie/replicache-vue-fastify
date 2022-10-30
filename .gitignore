@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 /services/nginx/ssl/cert.pem
 /services/nginx/ssl/key.pem
+.env

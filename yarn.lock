@@ -3478,6 +3478,11 @@ release-zalgo@^1.0.0:
   dependencies:
     es6-error "^4.0.1"
 
+replicache@^11.2.0:
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/replicache/-/replicache-11.2.0.tgz#0eed354fb2906497456f6c9f09e27334c15808f5"
+  integrity sha512-LK2wv3OIxNzAe4JNePC8mj9u4jC3+piSfxRTd/e+gTS7xSoSrI7eo5lDrFbS0NLgpD3nT8OoitIJUyE0wlLZ9g==
+
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
