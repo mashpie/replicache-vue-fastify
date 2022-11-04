@@ -10,6 +10,7 @@
     "test": "tap"
   },
   "dependencies": {
+    "@fastify/mongodb": "^6.1.0",
     "@rnvf/common-esm": "*",
     "@uscreen.de/fastify-app": "^1.0.0-4",
     "env-schema": "^5.1.0",

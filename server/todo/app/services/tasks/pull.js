@@ -1,9 +1,5 @@
 export default (fastify, opts, next) => {
-  fastify.post('/tasks/push', async () => {
-    return {}
-  })
-
-  fastify.post('/tasks/pull', async () => {
+  fastify.post('/pull', async () => {
     return {
       lastMutationID: 0,
       cookie: null,

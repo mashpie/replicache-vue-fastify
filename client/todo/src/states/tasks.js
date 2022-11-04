@@ -6,13 +6,15 @@ const cache = new ReplicacheVue({
   prefix: `task`,
   pushURL: '/api/tasks/push',
   pullURL: '/api/tasks/pull',
+  /**
+   * mutations propagate to the server with called payload
+   */
   mutators: {
     async addTask(tx, task) {
-      task.id = newId('task')
-      await tx.put(`task/${task.id}`, { ...task, done: false })
+      await tx.put(`task/${task.id}`, task)
     },
     async toggleTask(tx, task) {
-      await tx.put(`task/${task.id}`, { ...task, done: !task.done })
+      await tx.put(`task/${task.id}`, task)
     },
     async removeTask(tx, task) {
       await tx.del(`task/${task.id}`)
@@ -21,6 +23,14 @@ const cache = new ReplicacheVue({
 })
 
 export const taskList = cache.collection
-export const addTask = cache.addTask
+
+export const addTask = (task) => {
+  task.id = newId('task')
+  cache.addTask({ ...task, done: false })
+}
+
+export const toggleTask = (task) => {
+  cache.toggleTask({ ...task, done: !task.done })
+}
+
 export const removeTask = cache.removeTask
-export const toggleTask = cache.toggleTask
