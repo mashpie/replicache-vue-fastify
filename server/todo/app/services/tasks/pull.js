@@ -7,15 +7,22 @@ export default (fastify, opts, next) => {
   const tasks = fastify.mongo.db.collection('tasks')
 
   fastify.post('/pull', async (req) => {
-    const { clientID, cookie } = req.body
+    let { clientID, cookie } = req.body
     const lastMutationID = await getLastMutationID(clientID)
+
+    /**
+     * handle unknown clients
+     */
+    if (lastMutationID === 0) {
+      cookie = 0
+    }
 
     const changed = await tasks
       .find({ _revision: { $gt: cookie || 0 } })
       .project({ _id: false })
       .toArray()
 
-    const version = await getSpaceVersion('tasks')
+    let version = await getSpaceVersion('tasks')
 
     const patch = []
     if (cookie === null || cookie === 0) {
