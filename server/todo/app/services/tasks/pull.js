@@ -11,7 +11,7 @@ export default (fastify, opts, next) => {
     const lastMutationID = await getLastMutationID(clientID)
 
     /**
-     * handle unknown clients
+     * FIXME: handle unknown clients
      */
     if (lastMutationID === 0) {
       cookie = 0
@@ -31,9 +31,10 @@ export default (fastify, opts, next) => {
 
     patch.push(
       ...changed.map((row) => {
-        if (row.deleted) {
-          return { op: 'del', key: `task/${row.id}` }
-        }
+        // FIXME: del seams to be broken
+        // if (row.deleted) {
+        //   return { op: 'del', key: `task/${row.id}` }
+        // }
         return { op: 'put', key: `task/${row.id}`, value: row }
       })
     )
