@@ -27,12 +27,10 @@ export default (fastify, opts, next) => {
 
   fastify.post('/push', async (req) => {
     const { clientID, mutations } = req.body
-
     await applyMutations(clientID, mutations, {
       space: 'tasks',
       mutations: taskMutations
     })
-
     return {}
   })
 
