@@ -20,8 +20,11 @@ export default (fastify, opts, next) => {
         { upsert: false }
       )
     },
-    async removeTask({ id }) {
-      await tasks.findOneAndUpdate({ id }, { $set: { deleted: true } })
+    async removeTask({ id, _revision }) {
+      await tasks.findOneAndUpdate(
+        { id },
+        { $set: { deleted: true, _revision } }
+      )
     }
   }
 

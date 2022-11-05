@@ -7,14 +7,14 @@ export default (fastify, opts, next) => {
   const tasks = fastify.mongo.db.collection('tasks')
 
   fastify.post('/pull', async (req) => {
-    let { clientID, cookie } = req.body
-    const lastMutationID = await getLastMutationID(clientID)
+    let { clientID, cookie, lastMutationID } = req.body
+    const currentMutationID = await getLastMutationID(clientID, lastMutationID)
 
     /**
-     * FIXME: handle unknown clients
+     * Client is out of sync: trigger a full sync with new clientID.
      */
-    if (lastMutationID === 0) {
-      cookie = 0
+    if (lastMutationID > currentMutationID) {
+      return { error: 'ClientStateNotFound' }
     }
 
     const changed = await tasks
@@ -25,22 +25,20 @@ export default (fastify, opts, next) => {
     let version = await getSpaceVersion('tasks')
 
     const patch = []
-    if (cookie === null || cookie === 0) {
-      patch.push({ op: 'clear' })
-    }
+    if (cookie === null) patch.push({ op: 'clear' })
 
     patch.push(
       ...changed.map((row) => {
         // FIXME: del seams to be broken
-        // if (row.deleted) {
-        //   return { op: 'del', key: `task/${row.id}` }
-        // }
+        if (row.deleted) {
+          return { op: 'del', key: `task/${row.id}` }
+        }
         return { op: 'put', key: `task/${row.id}`, value: row }
       })
     )
 
     return {
-      lastMutationID,
+      lastMutationID: currentMutationID,
       cookie: version,
       patch
     }
