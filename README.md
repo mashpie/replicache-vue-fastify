@@ -12,8 +12,8 @@ The primary purpose is to demonstrate a simple and generic setup of replicache i
 
 Replicaches core implementation details are abstracted into two self-contained modules for each frontend and backend. You'll find them embedded into the corresponding client- and server packages.
 
-* Frontend "[replicache-vue](./blob/main/client/todo/src/states/_replicache-vue.js)"
-* Backend "[replicache-fastify](./blob/main/server/todo/app/plugins/replicache.js)"
+* Frontend "[replicache-vue](https://github.com/mashpie/replicache-vue-fastify/blob/main/client/todo/src/states/_replicache-vue.js)"
+* Backend "[replicache-fastify](https://github.com/mashpie/replicache-vue-fastify/blob/main/server/todo/app/plugins/replicache.js)"
 
 ## Directory Layout
 
