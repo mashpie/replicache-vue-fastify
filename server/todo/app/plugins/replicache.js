@@ -39,19 +39,18 @@ export default fp(
     }
 
     /**
-     * Mutations
+     * PUSH: applyMutations
      */
-    const applyMutations = async (clientID, mutations, aggregate) => {
+    const pushHandler = async (body, space = 'global', spaceMutations) => {
+      const { clientID, mutations } = body
       /**
-       * versions
+       * versions and lastMutationID are used to determine if the client is out of sync.
        */
-      const prevVersion = await getSpaceVersion(aggregate.space)
+      let [prevVersion, lastMutationID] = await Promise.all([
+        getSpaceVersion(space),
+        getLastMutationID(clientID)
+      ])
       const nextVersion = prevVersion + 1
-
-      /**
-       * mutations
-       */
-      let lastMutationID = await getLastMutationID(clientID)
 
       for (const mutation of mutations) {
         /**
@@ -88,7 +87,7 @@ export default fp(
          */
         try {
           const mutationFn =
-            aggregate.mutations[mutation.name] ||
+            spaceMutations[mutation.name] ||
             (() => {
               fastify.log.warn(`Unknown mutation ${mutation.name}`)
             })
@@ -108,12 +107,68 @@ export default fp(
         lastMutationID = expectedMutationID
       }
 
-      await setLastMutationID(clientID, lastMutationID)
+      await Promise.all([
+        setLastMutationID(clientID, lastMutationID),
+        setSpaceVersion(space, nextVersion)
+      ])
+    }
+
+    /**
+     * PULL: pull changes for space
+     */
+    const pullHandler = async (
+      body,
+      space = 'global',
+      prefix = '',
+      getChanges
+    ) => {
+      const { clientID, cookie, lastMutationID } = body
 
       /**
-       * FIXME: should this really increase in any case?
+       * Get the current known mutationID for this client
        */
-      await setSpaceVersion(aggregate.space, nextVersion)
+      const currentMutationID = await getLastMutationID(
+        clientID,
+        lastMutationID
+      )
+
+      /**
+       * Client is out of sync: trigger a full sync with new clientID.
+       */
+      if (lastMutationID > currentMutationID) {
+        return { error: 'ClientStateNotFound' }
+      }
+
+      /**
+       * fetch version and changes
+       */
+      const [version, changed] = await Promise.all([
+        getSpaceVersion(space),
+        getChanges(cookie || 0)
+      ])
+
+      /**
+       * calculate the changeset
+       */
+      const patch = []
+      if (cookie === null) patch.push({ op: 'clear' })
+      patch.push(
+        ...changed.map((row) => {
+          if (row.deleted) {
+            return { op: 'del', key: `${prefix}/${row.id}` }
+          }
+          return { op: 'put', key: `${prefix}/${row.id}`, value: row }
+        })
+      )
+
+      /**
+       * pullresponse
+       */
+      return {
+        lastMutationID: currentMutationID,
+        cookie: version,
+        patch
+      }
     }
 
     fastify.decorate('replicache', {
@@ -121,7 +176,8 @@ export default fp(
       setSpaceVersion,
       getLastMutationID,
       setLastMutationID,
-      applyMutations
+      pushHandler,
+      pullHandler
     })
 
     next()

@@ -1,5 +1,5 @@
 export default (fastify, opts, next) => {
-  const { applyMutations } = fastify.replicache
+  const { pushHandler } = fastify.replicache
 
   /**
    * Tasks
@@ -23,17 +23,14 @@ export default (fastify, opts, next) => {
     async removeTask({ id, _revision }) {
       await tasks.findOneAndUpdate(
         { id },
-        { $set: { deleted: true, _revision } }
+        { $set: { deleted: true, _revision } },
+        { upsert: false }
       )
     }
   }
 
   fastify.post('/push', async (req) => {
-    const { clientID, mutations } = req.body
-    await applyMutations(clientID, mutations, {
-      space: 'tasks',
-      mutations: taskMutations
-    })
+    await pushHandler(req.body, 'tasks', taskMutations)
     return {}
   })
 
