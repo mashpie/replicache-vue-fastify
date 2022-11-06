@@ -6,6 +6,7 @@ const cache = new ReplicacheVue({
   prefix: `task`,
   pushURL: '/api/tasks/push',
   pullURL: '/api/tasks/pull',
+
   /**
    * mutations propagate to the server with called payload
    */

@@ -1,5 +1,7 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Replicache } from 'replicache'
+import { io } from 'socket.io-client'
+import { useOnline } from '@vueuse/core'
 
 export function ReplicacheVue(options) {
   const collection = ref(new Map())
@@ -40,6 +42,29 @@ export function ReplicacheVue(options) {
       // initialValuesInFirstDiff: true // might have performance impact, too
     }
   )
+
+  /**
+   * tracks changes on backend events
+   */
+  const socket = io('wss://', { path: '/api/socket' })
+  socket.on('poke', (space) => {
+    if (space === options.name) rep.pull()
+  })
+
+  /**
+   * tracks changes on visibilitychange
+   */
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') rep.pull()
+  })
+
+  /**
+   * tracks changes on network events
+   */
+  const online = useOnline()
+  watch(online, (isOnline) => {
+    if (isOnline) rep.pull()
+  })
 
   return { ...rep.mutate, collection }
 }

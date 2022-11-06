@@ -111,6 +111,8 @@ export default fp(
         setLastMutationID(clientID, lastMutationID),
         setSpaceVersion(space, nextVersion)
       ])
+
+      fastify.io.emit('poke', space)
     }
 
     /**

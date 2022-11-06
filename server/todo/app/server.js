@@ -16,6 +16,9 @@ server.ready((err) => {
     'server ready, routes are set:\n' +
       server.printRoutes({ commonPrefix: false })
   )
+  server.io.on('connect', (socket) =>
+    console.info('Socket connected!', socket.id)
+  )
 })
 
 /**

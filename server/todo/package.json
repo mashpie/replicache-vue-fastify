@@ -15,7 +15,9 @@
     "@uscreen.de/fastify-app": "^1.0.0-4",
     "env-schema": "^5.1.0",
     "fastify": "^4.9.2",
-    "fastify-plugin": "^4.2.1"
+    "fastify-plugin": "^4.2.1",
+    "fastify-socket.io": "^4.0.0",
+    "socket.io": "^4.5.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.16",
