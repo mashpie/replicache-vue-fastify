@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "mkcert": "cd services/nginx/ssl && mkcert -key-file key.pem -cert-file cert.pem localhost",
-    "test": "nx run-many --target=test",
+    "install.services": "service install",
+    "start.services": "service start",
     "dev": "nx run-many --target=dev"
   },
   "private": true,
