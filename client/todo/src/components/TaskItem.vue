@@ -10,7 +10,6 @@
         />
         <div class="ml-3 text-md font-medium text-gray-700 truncate">
           {{ task.title }}
-          ({{ task.deleted }})
         </div>
       </div>
     </label>

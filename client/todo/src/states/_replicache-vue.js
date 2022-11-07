@@ -1,5 +1,5 @@
 import { ref, watch } from 'vue'
-import { Replicache } from 'replicache'
+import { Replicache, TEST_LICENSE_KEY } from 'replicache'
 import { io } from 'socket.io-client'
 import { useOnline } from '@vueuse/core'
 
@@ -9,7 +9,7 @@ export function ReplicacheVue(options) {
 
   const rep = new Replicache({
     // eslint-disable-next-line no-undef
-    licenseKey: import.meta.env.VITE_REPLICACHE_LICENSE_KEY,
+    licenseKey: import.meta.env.VITE_REPLICACHE_LICENSE_KEY || TEST_LICENSE_KEY,
     ...options
   })
 
