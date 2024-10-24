@@ -12,7 +12,7 @@
   "dependencies": {
     "@fastify/mongodb": "^6.1.0",
     "@rnvf/common-esm": "*",
-    "@uscreen.de/fastify-app": "^1.0.0-4",
+    "@uscreen.de/fastify-app": "^2.0.0",
     "env-schema": "^5.1.0",
     "fastify": "^4.9.2",
     "fastify-plugin": "^4.2.1",
