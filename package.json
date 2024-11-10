@@ -11,7 +11,7 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@uscreen.de/dev-service": "^0.11.19",
+    "@uscreen.de/dev-service": "^0.12.10",
     "nx": "999.9.9"
   },
   "workspaces": [
